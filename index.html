@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html class="select-none scroll-smooth">
+      <head>
+            <meta charset="UTF-8" />
+            <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1.0"
+            />
+            <script src="https://cdn.tailwindcss.com"></script>
+            <script>
+                  tailwind.config = {
+                        darkMode: 'class',
+                        theme: {
+                              container: {
+                                    center: true,
+                                    padding: '20px',
+                              },
+                              extend: {
+                                    colors: {
+                                          primary: '#84cc16',
+                                          'primary-sem': '#bef264',
+                                          'dark-primary-sem': '#4d7c0f',
+                                          seccondary: '#334155',
+                                          'dark-seccondary': '#cbd5e1',
+                                          dark: '#0f172a',
+                                          light: '#e2e8f0',
+                                          'light-mode': '#f1f5f9',
+                                          'dark-mode': '#020617',
+                                    },
+                                    screens: {
+                                          sm: '640px',
+                                          md: '768px',
+                                          lg: '1024px',
+                                          // xl: '1280px',
+                                          //' 2xl': '1320px',
+                                    },
+                              },
+                        },
+                  };
+            </script>
+            <style type="text/tailwindcss">
+                  @layer utilities {
+                        body {
+                              font-family: 'Inter', sans-serif;
+                        }
+
+                        .navbar-fixed1 {
+                              @apply bg-light-mode my-transition fixed z-[9999];
+                              box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+                        }
+                        .navbar-fixed2 {
+                              @apply bg-dark-mode my-transition fixed z-[9999];
+                              box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.1);
+                        }
+
+                        .hamburger-line {
+                              @apply bg-primary my-2 block h-[2px] w-[30px];
+                        }
+
+                        .hamburger-active > span:nth-child(1) {
+                              @apply rotate-45;
+                        }
+
+                        .hamburger-active > span:nth-child(2) {
+                              @apply scale-0;
+                        }
+
+                        .hamburger-active > span:nth-child(3) {
+                              @apply -rotate-45;
+                        }
+
+                        #dark-toggle:checked ~ label div.toggle-circle {
+                              @apply translate-x-3;
+                        }
+                        /* */
+                        .h2 {
+                              @apply text-primary text-2xl font-semibold uppercase lg:mb-8;
+                        }
+                        .h3 {
+                              @apply text-dark dark:text-light max-w-xl text-2xl font-semibold;
+                        }
+                        .h3-sem {
+                              @apply text-primary dark:hover:text-primary-sem hover:text-dark-primary-sem block truncate text-sm font-semibold lg:text-base;
+                        }
+                        .p {
+                              @apply text-seccondary dark:text-dark-seccondary max-w-xl text-base font-medium;
+                        }
+                        .p-sem {
+                              @apply text-seccondary dark:text-dark-seccondary text-xs font-medium lg:text-sm;
+                        }
+                        .my-transition {
+                              @apply transition duration-300 ease-in-out;
+                        }
+                  }
+            </style>
+            <script>
+                  if (
+                        localStorage.theme === 'dark' ||
+                        (!('theme' in localStorage) &&
+                              window.matchMedia('(prefers-color-scheme: dark)')
+                                    .matches)
+                  ) {
+                        document.documentElement.classList.add('dark');
+                  } else {
+                        document.documentElement.classList.remove('dark');
+                  }
+            </script>
+      </head>
+      <body class="dark:bg-darkmode bg-slate-100">
+            <!-- Header Start -->
+            <header
+                  class="absolute left-0 top-0 z-10 flex w-full items-center bg-transparent"
+            >
+                  <div class="container">
+                        <div class="relative flex items-center justify-between">
+                              <h3 class="">
+                                    <a
+                                          href="#home"
+                                          class="text-primary block py-6 text-2xl font-bold"
+                                          >Portfolio</a
+                                    >
+                              </h3>
+                              <div class="flex items-center">
+                                    <button
+                                          id="hamburger"
+                                          name="hamburger"
+                                          type="button"
+                                          class="absolute right-0 block lg:hidden"
+                                    >
+                                          <span
+                                                class="hamburger-line origin-top-left transition duration-300 ease-in-out"
+                                          ></span>
+                                          <span
+                                                class="hamburger-line transition duration-300 ease-in-out"
+                                          ></span>
+                                          <span
+                                                class="hamburger-line origin-bottom-left transition duration-300 ease-in-out"
+                                          ></span>
+                                    </button>
+
+                                    <nav
+                                          id="nav-menu"
+                                          class="dark:bg-dark-mode bg-light-mode absolute right-0 top-full hidden w-full max-w-[200px] rounded-lg py-5 lg:static lg:block lg:max-w-full lg:rounded-none lg:bg-transparent lg:dark:bg-transparent"
+                                    >
+                                          <ul class="block lg:flex">
+                                                <li class="group">
+                                                      <a
+                                                            href="#home"
+                                                            class="text-dark group-hover:text-primary dark:text-light mx-8 flex py-2 text-base"
+                                                            >Beranda</a
+                                                      >
+                                                </li>
+                                                <li class="group">
+                                                      <a
+                                                            href="#about"
+                                                            class="text-dark group-hover:text-primary dark:text-light mx-8 flex py-2 text-base"
+                                                            >Tentang Saya</a
+                                                      >
+                                                </li>
+                                                <li class="group">
+                                                      <a
+                                                            href="#portfolio"
+                                                            class="text-dark group-hover:text-primary dark:text-light mx-8 flex py-2 text-base"
+                                                            >Portfolio</a
+                                                      >
+                                                </li>
+                                                <li class="group">
+                                                      <a
+                                                            href="#clients"
+                                                            class="text-dark group-hover:text-primary dark:text-light mx-8 flex py-2 text-base"
+                                                            >Clients</a
+                                                      >
+                                                </li>
+                                                <li class="group">
+                                                      <a
+                                                            href="#blog"
+                                                            class="text-dark group-hover:text-primary dark:text-light mx-8 flex py-2 text-base"
+                                                            >Blog</a
+                                                      >
+                                                </li>
+                                                <li class="group">
+                                                      <a
+                                                            href="#contact"
+                                                            class="text-dark group-hover:text-primary dark:text-light ml-8 flex py-2 text-base"
+                                                            >Contact</a
+                                                      >
+                                                </li>
+                                          </ul>
+                                    </nav>
+                              </div>
+                        </div>
+                  </div>
+            </header>
+            <!-- Header End -->
+            <div class="bg-light-mode dark:bg-dark-mode z-50">
+                  <!-- Hero Section Start -->
+                  <section id="home" class="pb-24 pt-32 lg:pb-32">
+                        <div class="container">
+                              <div class="flex flex-wrap">
+                                    <div class="w-full self-center lg:w-1/2">
+                                          <h1
+                                                class="text-primary text-2xl font-semibold"
+                                          >
+                                                Hallo Semua👋, saya
+                                                <span
+                                                      class="text-dark dark:text-light mt-4 block text-4xl font-bold lg:text-5xl"
+                                                      >Abdullah Khadafi</span
+                                                >
+                                          </h1>
+                                          <h2
+                                                class="text-seccondary dark:text-dark-seccondary mb-5 text-xl font-semibold lg:text-2xl"
+                                          >
+                                                Programer &
+                                                <span
+                                                      class="text-dark-primary-sem dark:text-primary-sem"
+                                                      >Frontend
+                                                      Develeloper</span
+                                                >
+                                          </h2>
+                                          <p
+                                                class="text-seccondary dark:text-dark-seccondary mb-10 text-base font-medium leading-relaxed lg:text-xl"
+                                                align="justify"
+                                          >
+                                                Saya seorang pengembang web
+                                                dengan pengalaman dalam HTML,
+                                                CSS, JavaScript, TailwindCSS,
+                                                dan Bootstraps. Menggabungkan
+                                                keterampilan desain responsif
+                                                dan pengembangan frontend untuk
+                                                menciptakan antarmuka menarik
+                                                dan fungsional. Mempunyai
+                                                keahlian dalam membangun
+                                                aplikasi web interaktif dan
+                                                fokus pada pengalaman pengguna
+                                                yang optimal.
+                                          </p>
+                                          <a
+                                                href=""
+                                                class="bg-primary text-light rounded-lg px-8 py-3 text-2xl transition duration-300 ease-in-out hover:opacity-80 hover:shadow-lg"
+                                                >CV Saya</a
+                                          >
+                                    </div>
+
+                                    <div
+                                          class="w-full self-end lg:w-1/2 lg:pl-20"
+                                    >
+                                          <div
+                                                class="relative mx-auto mt-10 justify-center lg:right-0"
+                                          >
+                                                <span
+                                                      class="absolute bottom-0 left-1/2 z-0 -translate-x-1/2 md:scale-125"
+                                                >
+                                                      <svg
+                                                            width="400"
+                                                            height="400"
+                                                            viewBox="0 0 200 200"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                      >
+                                                            <path
+                                                                  fill="#84cc16"
+                                                                  d="M47.4,-51C59.2,-35.6,65.1,-17.8,63.4,-1.7C61.7,14.5,52.6,28.9,40.8,36.6C28.9,44.2,14.5,45,-2,47C-18.4,49,-36.8,52.1,-45.4,44.5C-53.9,36.8,-52.5,18.4,-51.2,1.3C-49.9,-15.8,-48.7,-31.7,-40.2,-47.1C-31.7,-62.4,-15.8,-77.3,1,-78.3C17.8,-79.2,35.6,-66.3,47.4,-51Z"
+                                                                  transform="translate(100 100) scale(1.1)"
+                                                            />
+                                                      </svg>
+                                                </span>
+                                                <img
+                                                      src="./assets/img/pp (1).png"
+                                                      alt="Abdullah Khadafi"
+                                                      class="relative z-10 mx-auto max-w-full"
+                                                />
+                                                <div
+                                                      class="absolute bottom-52 left-1/2 z-30"
+                                                >
+                                                      <canvas
+                                                            id="myChart"
+                                                            class="w-52 lg:w-60"
+                                                      ></canvas>
+                                                </div>
+                                                <div
+                                                      class="dark:bg-dark-mode bg-light-mode absolute -bottom-5 left-1/2 z-40 -translate-x-1/2 rounded-full shadow-md dark:shadow-slate-900 md:scale-125"
+                                                >
+                                                      <div
+                                                            class="w-full px-1 py-3"
+                                                      >
+                                                            <div
+                                                                  class="flex items-center justify-center"
+                                                            >
+                                                                  <!-- Instagram -->
+                                                                  <a
+                                                                        href="https://instagram.com/khadafi.dev"
+                                                                        target="_blank"
+                                                                        class="hover:border-primary hover:bg-primary text-primary border-primary dark:hover:text-dark hover:text-light mx-2 flex h-9 w-9 items-center justify-center rounded-full border"
+                                                                  >
+                                                                        <svg
+                                                                              role="img"
+                                                                              width="20"
+                                                                              class="fill-current"
+                                                                              viewBox="0 0 24 24"
+                                                                              xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                              <title>
+                                                                                    Instagram
+                                                                              </title>
+                                                                              <path
+                                                                                    d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"
+                                                                              />
+                                                                        </svg>
+                                                                  </a>
+
+                                                                  <!-- Twitter -->
+                                                                  <a
+                                                                        href="https://twitter.com/khadafi.dev"
+                                                                        target="_blank"
+                                                                        class="hover:border-primary hover:bg-primary text-primary border-primary dark:hover:text-dark hover:text-light mx-2 flex h-9 w-9 items-center justify-center rounded-full border"
+                                                                  >
+                                                                        <svg
+                                                                              role="img"
+                                                                              width="20"
+                                                                              class="fill-current"
+                                                                              viewBox="0 0 24 24"
+                                                                              xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                              <title>
+                                                                                    Twitter
+                                                                              </title>
+                                                                              <path
+                                                                                    d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+                                                                              />
+                                                                        </svg>
+                                                                  </a>
+
+                                                                  <!-- TikTok -->
+                                                                  <a
+                                                                        href="https://tiktok.com/@khadafi.dev"
+                                                                        target="_blank"
+                                                                        class="hover:border-primary hover:bg-primary text-primary border-primary dark:hover:text-dark hover:text-light mx-2 flex h-9 w-9 items-center justify-center rounded-full border"
+                                                                  >
+                                                                        <svg
+                                                                              role="img"
+                                                                              width="20"
+                                                                              class="fill-current"
+                                                                              viewBox="0 0 24 24"
+                                                                              xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                              <title>
+                                                                                    TikTok
+                                                                              </title>
+                                                                              <path
+                                                                                    d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"
+                                                                              />
+                                                                        </svg>
+                                                                  </a>
+
+                                                                  <!-- LinkedIn -->
+                                                                  <a
+                                                                        href=""
+                                                                        target="_blank"
+                                                                        class="hover:border-primary hover:bg-primary text-primary border-primary dark:hover:text-dark hover:text-light mx-2 flex h-9 w-9 items-center justify-center rounded-full border"
+                                                                  >
+                                                                        <svg
+                                                                              role="img"
+                                                                              width="20"
+                                                                              class="fill-current"
+                                                                              viewBox="0 0 24 24"
+                                                                              xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                              <title>
+                                                                                    LinkedIn
+                                                                              </title>
+                                                                              <path
+                                                                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                                                                              />
+                                                                        </svg>
+                                                                  </a>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </section>
+                  <!-- Hero Section End -->
+                  <!-- About Section Start -->
+                  <section
+                        id="about"
+                        class="dark:bg-dark bg-light pb-24 pt-24 lg:pb-32 lg:pt-32"
+                  >
+                        <div class="container">
+                              <div class="flex flex-wrap">
+                                    <div class="mb-10 w-full lg:w-2/5 lg:pr-6">
+                                          <h2 class="h2 mb-2 lg:mb-8">
+                                                Tenetang Saya
+                                          </h2>
+                                          <h3 class="h3 mb-2">
+                                                Pengembang Website
+                                          </h3>
+                                          <p class="p" align="justify">
+                                                Saya seorang pengembang web
+                                                dengan pengalaman dalam HTML,
+                                                CSS, JavaScript, TailwindCSS,
+                                                dan Bootstraps. Menggabungkan
+                                                keterampilan desain responsif
+                                                dan pengembangan frontend untuk
+                                                menciptakan antarmuka menarik
+                                                dan fungsional. Mempunyai
+                                                keahlian dalam membangun
+                                                aplikasi web interaktif dan
+                                                fokus pada pengalaman pengguna
+                                                yang optimal.
+                                          </p>
+                                    </div>
+
+                                    <div class="w-full lg:w-3/5 lg:pl-6">
+                                          <h3 class="h3 mb-2 lg:mt-16">
+                                                Sertifikat
+                                          </h3>
+                                          <p
+                                                class="p mb-6 lg:max-w-full"
+                                                align="justify"
+                                          >
+                                                Saya telah meluangkan waktu dan
+                                                usaha untuk memenuhi persyaratan
+                                                setiap program sertifikasi,
+                                                memastikan bahwa saya memahami
+                                                dan mampu menerapkan
+                                                konsep-konsep yang diajarkan.
+                                                Sertifikasi ini memberikan bukti
+                                                nyata bahwa saya memiliki
+                                                kualifikasi yang diakui dalam
+                                                bidang saya.
+                                          </p>
+                                          <div class="grid grid-cols-2 gap-4">
+                                                <div
+                                                      class="my-transition border-primary overflow-hidden rounded-md border shadow-md dark:shadow-slate-900"
+                                                >
+                                                      <a
+                                                            href="https://www.dicoding.com/certificates/MRZMQ57VLPYQ"
+                                                            target="_blank"
+                                                      >
+                                                            <img
+                                                                  src="./assets/sertifikat/aws1.jpg"
+                                                                  alt=""
+                                                                  class="border-seccondary border-b-8 p-3"
+                                                            />
+                                                            <div
+                                                                  class="px-3 py-3"
+                                                            >
+                                                                  <h3
+                                                                        class="h3-sem mb-1"
+                                                                  >
+                                                                        AWS
+                                                                        Cloud
+                                                                  </h3>
+                                                                  <p
+                                                                        class="p-sem mb-2"
+                                                                        align="justify"
+                                                                  >
+                                                                        Dapat
+                                                                        memahami
+                                                                        AWS
+                                                                        Cloud
+                                                                        dengan
+                                                                        segala
+                                                                        jenis
+                                                                        layanan,
+                                                                        infrastruktur
+                                                                        global,
+                                                                        hingga
+                                                                        harganya.
+                                                                  </p>
+                                                                  <ul
+                                                                        class="p-sem list-disc px-5"
+                                                                  >
+                                                                        <li>
+                                                                              Komputasi
+                                                                              di
+                                                                              Cloud
+                                                                        </li>
+                                                                        <li>
+                                                                              Jaringan
+                                                                        </li>
+                                                                        <li>
+                                                                              Keamanan
+                                                                        </li>
+                                                                        <li>
+                                                                              Harga
+                                                                              dan
+                                                                              Dukungan
+                                                                        </li>
+                                                                        <li>
+                                                                              Migrasi
+                                                                              dan
+                                                                              Inovasi
+                                                                        </li>
+                                                                        <li>
+                                                                              Perjalanan
+                                                                              Cloud
+                                                                        </li>
+                                                                  </ul>
+                                                            </div>
+                                                      </a>
+                                                </div>
+                                                <div
+                                                      class="my-transition border-primary overflow-hidden rounded-md border shadow-md dark:shadow-slate-900"
+                                                >
+                                                      <a
+                                                            href="https://www.dicoding.com/certificates/81P23QMQYXOY"
+                                                            target="_blank"
+                                                      >
+                                                            <img
+                                                                  src="./assets/sertifikat/js1.jpg"
+                                                                  alt=""
+                                                                  class="border-seccondary border-b-8 p-3"
+                                                            />
+                                                            <div
+                                                                  class="px-3 py-3"
+                                                            >
+                                                                  <h3
+                                                                        class="h3-sem mb-1"
+                                                                  >
+                                                                        Pemrograman
+                                                                        JavaScript
+                                                                  </h3>
+                                                                  <p
+                                                                        class="p-sem mb-2"
+                                                                        align="justify"
+                                                                  >
+                                                                        Menguasai
+                                                                        dasar
+                                                                        JavaScript
+                                                                        untuk
+                                                                        pengembangan
+                                                                        aplikasi
+                                                                        web.
+                                                                  </p>
+                                                                  <ul
+                                                                        class="p-sem list-disc px-5"
+                                                                  >
+                                                                        <li>
+                                                                              Data
+                                                                              Structure
+                                                                        </li>
+                                                                        <li>
+                                                                              Function
+                                                                        </li>
+                                                                        <li>
+                                                                              Object-Oriented
+                                                                              Programming
+                                                                        </li>
+                                                                        <li>
+                                                                              Functional
+                                                                              Programming
+                                                                        </li>
+                                                                        <li>
+                                                                              Setup
+                                                                              Environment
+                                                                        </li>
+                                                                        <li>
+                                                                              Error
+                                                                              Handling
+                                                                        </li>
+                                                                  </ul>
+                                                            </div>
+                                                      </a>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </section>
+                  <!-- About Section End -->
+                  <!-- Portfolio Section Start -->
+                  <section
+                        id="portfolio"
+                        class="dark:bg-dark-mode bg-light-mode pb-24 pt-24 lg:pb-32 lg:pt-32"
+                  >
+                        <div class="container">
+                              <div class="w-full">
+                                    <div class="mx-auto max-w-xl text-center">
+                                          <h2 class="h2 mb-2">Portfolio</h2>
+                                          <h3 class="h3 mb-2">
+                                                Project Terbaru
+                                          </h3>
+                                          <p class="p mb-6" align="center">
+                                                Saya seorang pengembang
+                                                perangkat lunak dengan
+                                                pengalaman dalam membangun
+                                                aplikasi web dan mobile
+                                                menggunakan HTML, CSS, dan
+                                                JavaScript. Saya telah
+                                                menyelesaikan berbagai proyek
+                                                yang menunjukkan kemampuan dalam
+                                                desain responsif, integrasi API,
+                                                dan pengembangan aplikasi
+                                                cross-platform dengan React
+                                                Native.
+                                          </p>
+                                    </div>
+                              </div>
+                              <div
+                                    class="grid w-full grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6"
+                              >
+                                    <div class="">
+                                          <a href="#" target="_blank">
+                                                <div
+                                                      class="border-primary overflow-hidden rounded-md border"
+                                                >
+                                                      <img
+                                                            src="./assets/img/a.png"
+                                                            alt="project1"
+                                                            width="w-full"
+                                                            class="rounded-md p-1"
+                                                      />
+                                                </div>
+                                                <h3 class="h3-sem py-2">
+                                                      Landing Page 01
+                                                </h3>
+                                          </a>
+                                          <p class="p-sem" align="justify">
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quo eum, quibusdam doloribus
+                                                quisquam, id natus tempora hic
+                                                ipsam perferendis temporibus
+                                                reprehenderit ipsa fugiat! Fuga,
+                                                voluptatum.
+                                          </p>
+                                    </div>
+                                    <div class="">
+                                          <a href="#" target="_blank">
+                                                <div
+                                                      class="border-primary overflow-hidden rounded-md border"
+                                                >
+                                                      <img
+                                                            src="./assets/img/a.png"
+                                                            alt="project1"
+                                                            width="w-full"
+                                                            class="rounded-md p-1"
+                                                      />
+                                                </div>
+                                                <h3 class="h3-sem py-2">
+                                                      Landing Page 02
+                                                </h3>
+                                          </a>
+                                          <p class="p-sem" align="justify">
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quo eum, quibusdam doloribus
+                                                quisquam, id natus tempora hic
+                                                ipsam perferendis temporibus
+                                                reprehenderit ipsa fugiat! Fuga,
+                                                voluptatum.
+                                          </p>
+                                    </div>
+                                    <div class="">
+                                          <a href="#" target="_blank">
+                                                <div
+                                                      class="border-primary overflow-hidden rounded-md border"
+                                                >
+                                                      <img
+                                                            src="./assets/img/a.png"
+                                                            alt="project1"
+                                                            width="w-full"
+                                                            class="rounded-md p-1"
+                                                      />
+                                                </div>
+                                                <h3 class="h3-sem py-2">
+                                                      Landing Page 03
+                                                </h3>
+                                          </a>
+                                          <p class="p-sem" align="justify">
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quo eum, quibusdam doloribus
+                                                quisquam, id natus tempora hic
+                                                ipsam perferendis temporibus
+                                                reprehenderit ipsa fugiat! Fuga,
+                                                voluptatum.
+                                          </p>
+                                    </div>
+                                    <div class="">
+                                          <a href="#" target="_blank">
+                                                <div
+                                                      class="border-primary overflow-hidden rounded-md border"
+                                                >
+                                                      <img
+                                                            src="./assets/img/a.png"
+                                                            alt="project1"
+                                                            width="w-full"
+                                                            class="rounded-md p-1"
+                                                      />
+                                                </div>
+                                                <h3 class="h3-sem py-2">
+                                                      Landing Page 04
+                                                </h3>
+                                          </a>
+                                          <p class="p-sem" align="justify">
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quo eum, quibusdam doloribus
+                                                quisquam, id natus tempora hic
+                                                ipsam perferendis temporibus
+                                                reprehenderit ipsa fugiat! Fuga,
+                                                voluptatum.
+                                          </p>
+                                    </div>
+                              </div>
+                        </div>
+                  </section>
+                  <!-- Portfolio Section End -->
+                  <!-- Clients Section Start -->
+                  <section
+                        id="clients"
+                        class="dark:bg-dark bg-light pb-24 pt-24 lg:pb-32 lg:pt-32"
+                  >
+                        <div class="container">
+                              <div class="w-full">
+                                    <div
+                                          class="mx-auto mb-6 max-w-xl text-center"
+                                    >
+                                          <h2 class="h2 mb-2">Clients</h2>
+                                          <h3 class="h3 mb-2">
+                                                Yang Pernah Bekerjasama
+                                          </h3>
+                                          <p class="p">
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Vero suscipit facilis velit!
+                                          </p>
+                                    </div>
+                              </div>
+                        </div>
+                  </section>
+                  <!-- Clients Section End -->
+                  <!-- Blog Section Start -->
+                  <section
+                        id="blog"
+                        class="dark:bg-dark-mode bg-light-mode pb-24 pt-24 lg:pb-32 lg:pt-32"
+                  >
+                        <div class="container">
+                              <div class="w-full">
+                                    <div
+                                          class="bottom-16 mx-auto max-w-xl text-center"
+                                    >
+                                          <h2 class="h2 mb-2">Blog</h2>
+                                          <h3 class="h3 mb-2">
+                                                Kegiatan Terbaru
+                                          </h3>
+                                          <p class="p mb-6" align="justify">
+                                                Lorem ipsum dolor sit, amet
+                                                consectetur adipisicing elit.
+                                                Repellendus placeat optio
+                                                delectus ducimus vitae quod
+                                                veritatis consequuntur
+                                                architecto tempore porro.
+                                          </p>
+                                    </div>
+                              </div>
+                              <div
+                                    class="grid grid-cols-2 gap-4 lg:grid-cols-3 lg:gap-6"
+                              >
+                                    <div
+                                          class="my-transition border-seccondary lg:dark:hover:bg-dark lg:hover:bg-light overflow-hidden rounded-md border shadow-md dark:shadow-slate-900"
+                                    >
+                                          <div class="px-3 pb-5 pt-3">
+                                                <a href="" class="">
+                                                      <img
+                                                            src="./assets/img/a.png"
+                                                            alt=""
+                                                            class="border-seccondary w-full rounded-t-md border-b-8"
+                                                      />
+                                                      <h3 class="h3-sem my-1">
+                                                            Botcamp 2023
+                                                      </h3>
+                                                </a>
+                                                <p
+                                                      class="p-sem mb-4"
+                                                      align="justify"
+                                                >
+                                                      Lorem ipsum dolor sit amet
+                                                      consectetur adipisicing
+                                                      elit. Mollitia, quos fuga!
+                                                      Ullam laudantium iste nisi
+                                                      quo? Illum voluptatibus
+                                                      quidem ullam ipsa
+                                                      voluptates. Nisi nesciunt
+                                                      neque mollitia, doloribus
+                                                      Lorem, ipsum dolor.
+                                                </p>
+                                                <a
+                                                      href=""
+                                                      target="_blank"
+                                                      class="bg-primary rounded-md p-2 text-xs font-normal text-white transition duration-300 hover:opacity-80"
+                                                      >Selengkapnya...</a
+                                                >
+                                          </div>
+                                    </div>
+                                    <div
+                                          class="my-transition border-seccondary lg:dark:hover:bg-dark lg:hover:bg-light overflow-hidden rounded-md border shadow-md dark:shadow-slate-900"
+                                    >
+                                          <div class="px-3 pb-5 pt-3">
+                                                <a href="" class="">
+                                                      <img
+                                                            src="./assets/img/a.png"
+                                                            alt=""
+                                                            class="border-seccondary w-full rounded-t-md border-b-8"
+                                                      />
+                                                      <h3 class="h3-sem my-1">
+                                                            Botcamp 2023
+                                                      </h3>
+                                                </a>
+                                                <p
+                                                      class="p-sem mb-4"
+                                                      align="justify"
+                                                >
+                                                      Lorem ipsum dolor sit amet
+                                                      consectetur adipisicing
+                                                      elit. Mollitia, quos fuga!
+                                                      Ullam laudantium iste nisi
+                                                      quo? Illum voluptatibus
+                                                      quidem ullam ipsa
+                                                      voluptates. Nisi nesciunt
+                                                      neque mollitia, doloribus
+                                                      Lorem, ipsum dolor.
+                                                </p>
+                                                <a
+                                                      href=""
+                                                      target="_blank"
+                                                      class="bg-primary rounded-md p-2 text-xs font-normal text-white transition duration-300 hover:opacity-80"
+                                                      >Selengkapnya...</a
+                                                >
+                                          </div>
+                                    </div>
+                                    <div
+                                          class="my-transition border-seccondary lg:dark:hover:bg-dark lg:hover:bg-light overflow-hidden rounded-md border shadow-md dark:shadow-slate-900"
+                                    >
+                                          <div class="px-3 pb-5 pt-3">
+                                                <a href="" class="">
+                                                      <img
+                                                            src="./assets/img/a.png"
+                                                            alt=""
+                                                            class="border-seccondary w-full rounded-t-md border-b-8"
+                                                      />
+                                                      <h3 class="h3-sem my-1">
+                                                            Botcamp 2023
+                                                      </h3>
+                                                </a>
+                                                <p
+                                                      class="p-sem mb-4"
+                                                      align="justify"
+                                                >
+                                                      Lorem ipsum dolor sit amet
+                                                      consectetur adipisicing
+                                                      elit. Mollitia, quos fuga!
+                                                      Ullam laudantium iste nisi
+                                                      quo? Illum voluptatibus
+                                                      quidem ullam ipsa
+                                                      voluptates. Nisi nesciunt
+                                                      neque mollitia, doloribus
+                                                      Lorem, ipsum dolor.
+                                                </p>
+                                                <a
+                                                      href=""
+                                                      target="_blank"
+                                                      class="bg-primary rounded-md p-2 text-xs font-normal text-white transition duration-300 hover:opacity-80"
+                                                      >Selengkapnya...</a
+                                                >
+                                          </div>
+                                    </div>
+                                    <div
+                                          class="my-transition border-seccondary lg:dark:hover:bg-dark lg:hover:bg-light overflow-hidden rounded-md border shadow-md dark:shadow-slate-900 lg:hidden"
+                                    >
+                                          <div class="px-3 pb-5 pt-3">
+                                                <a href="" class="">
+                                                      <img
+                                                            src="./assets/img/a.png"
+                                                            alt=""
+                                                            class="border-seccondary w-full rounded-t-md border-b-8"
+                                                      />
+                                                      <h3 class="h3-sem my-1">
+                                                            Botcamp 2023
+                                                      </h3>
+                                                </a>
+                                                <p
+                                                      class="p-sem mb-4"
+                                                      align="justify"
+                                                >
+                                                      Lorem ipsum dolor sit amet
+                                                      consectetur adipisicing
+                                                      elit. Mollitia, quos fuga!
+                                                      Ullam laudantium iste nisi
+                                                      quo? Illum voluptatibus
+                                                      quidem ullam ipsa
+                                                      voluptates. Nisi nesciunt
+                                                      neque mollitia, doloribus
+                                                      Lorem, ipsum dolor.
+                                                </p>
+                                                <a
+                                                      href=""
+                                                      target="_blank"
+                                                      class="bg-primary rounded-md p-2 text-xs font-normal text-white transition duration-300 hover:opacity-80"
+                                                      >Selengkapnya...</a
+                                                >
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </section>
+                  <!-- Blog Section End -->
+                  <!-- Contact Section Start -->
+                  <section
+                        id="contact"
+                        class="dark:bg-dark bg-light pb-24 pt-24 lg:pb-32 lg:pt-32"
+                  >
+                        <div class="container">
+                              <div class="w-ful px-8">
+                                    <div
+                                          class="bottom-16 mx-auto max-w-xl text-center"
+                                    >
+                                          <h2 class="h2 mb-2 lg:mb-8">
+                                                Kontak
+                                          </h2>
+                                          <h3 class="h3 mb-2">Kontak Person</h3>
+                                          <p class="p mb-4" align="center">
+                                                Lorem ipsum dolor sit, amet
+                                                consectetur adipisicing elit.
+                                          </p>
+                                    </div>
+                              </div>
+                              <form action="">
+                                    <div class="mx-auto lg:w-1/2">
+                                          <div class="w-ful mb-4 px-8">
+                                                <label
+                                                      for="name"
+                                                      class="text-md text-primary font-semibold"
+                                                      >Nama</label
+                                                >
+                                                <input
+                                                      type="name"
+                                                      id="name"
+                                                      class="text-dark dark:text-light focus:ring-primary border-dark dark:border-light focus:border-primary focus:bg-light dark:focus:bg-dark mt-1 w-full rounded-md border bg-transparent p-2 focus:outline-none focus:ring-1"
+                                                />
+                                          </div>
+                                          <div class="w-ful mb-4 px-8">
+                                                <label
+                                                      for="email"
+                                                      class="text-md text-primary font-semibold"
+                                                      >Email</label
+                                                >
+                                                <input
+                                                      type="email"
+                                                      id="email"
+                                                      class="text-dark dark:text-light focus:ring-primary border-dark dark:border-light focus:border-primary focus:bg-light dark:focus:bg-dark mt-1 w-full rounded-md border bg-transparent p-2 focus:outline-none focus:ring-1"
+                                                />
+                                          </div>
+                                          <div class="w-ful mb-4 px-8">
+                                                <label
+                                                      for="message"
+                                                      class="text-md text-primary font-semibold"
+                                                      >Message</label
+                                                >
+                                                <textarea
+                                                      type="text"
+                                                      id="message"
+                                                      class="text-dark dark:text-light focus:ring-primary border-dark dark:border-light focus:border-primary focus:bg-light dark:focus:bg-dark mt-1 h-32 w-full rounded-md border bg-transparent p-2 focus:outline-none focus:ring-1"
+                                                ></textarea>
+                                          </div>
+                                          <div class="w-ful mb-4 px-8">
+                                                <button
+                                                      class="text-md bg-primary w-1/2 rounded-md px-8 py-3 font-semibold text-white transition duration-300 hover:opacity-80 hover:shadow-md"
+                                                >
+                                                      Kirim
+                                                </button>
+                                          </div>
+                                    </div>
+                              </form>
+                        </div>
+                  </section>
+                  <!-- Contact Section End -->
+            </div>
+            <!-- Footer Start -->
+            <footer class="bg-dark-mode py-6">
+                  <div class="container">
+                        <h2 class="h2 mb-2">A.Khadafi</h2>
+                        <div class="flex flex-wrap">
+                              <div
+                                    class="mb-12 w-1/2 font-medium text-slate-300"
+                              >
+                                    <h3 class="text-1xl mb-2 font-bold">
+                                          Hubungi Saya
+                                    </h3>
+                                    <p class="p">khadafi.dev@gmail.com</p>
+                                    <p class="p">Indonesia, Sumatra Barat</p>
+                                    <p class="p">Payakumbuh</p>
+                              </div>
+                              <div
+                                    class="mb-12 w-1/2 font-medium text-slate-300"
+                              >
+                                    <h3 class="text-1xl mb-2 font-bold">
+                                          Kategori Tulisan
+                                    </h3>
+                                    <ul class="list-disc px-5">
+                                          <li>
+                                                <a
+                                                      href="#"
+                                                      class="hover:text-primary inline-block text-base"
+                                                      >Programming</a
+                                                >
+                                          </li>
+                                          <li>
+                                                <a
+                                                      href="#"
+                                                      class="hover:text-primary inline-block text-base"
+                                                      >Teknologi</a
+                                                >
+                                          </li>
+                                          <li>
+                                                <a
+                                                      href="#"
+                                                      class="hover:text-primary inline-block text-base"
+                                                      >Desain</a
+                                                >
+                                          </li>
+                                    </ul>
+                              </div>
+                        </div>
+
+                        <div class="w-full border-t border-slate-700 pt-10">
+                              <div
+                                    class="mb-5 flex items-center justify-center"
+                              >
+                                    <!-- Youtube -->
+                                    <a
+                                          href=""
+                                          target="_blank"
+                                          class="hover:border-primary hover:bg-primary mr-3 flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-300 hover:text-white"
+                                    >
+                                          <svg
+                                                role="img"
+                                                width="20"
+                                                class="fill-current"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                                <title>YouTube</title>
+                                                <path
+                                                      d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                                                />
+                                          </svg>
+                                    </a>
+
+                                    <!-- Instagram -->
+                                    <a
+                                          href="https://instagram.com/khadafi.dev"
+                                          target="_blank"
+                                          class="hover:border-primary hover:bg-primary mr-3 flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-300 hover:text-white"
+                                    >
+                                          <svg
+                                                role="img"
+                                                width="20"
+                                                class="fill-current"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                                <title>Instagram</title>
+                                                <path
+                                                      d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"
+                                                />
+                                          </svg>
+                                    </a>
+
+                                    <!-- Twitter -->
+                                    <a
+                                          href="https://twitter.com/khadafi.dev"
+                                          target="_blank"
+                                          class="hover:border-primary hover:bg-primary mr-3 flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-300 hover:text-white"
+                                    >
+                                          <svg
+                                                role="img"
+                                                width="20"
+                                                class="fill-current"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                                <title>Twitter</title>
+                                                <path
+                                                      d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+                                                />
+                                          </svg>
+                                    </a>
+
+                                    <!-- TikTok -->
+                                    <a
+                                          href="https://tiktok.com/@khadafi.dev"
+                                          target="_blank"
+                                          class="hover:border-primary hover:bg-primary mr-3 flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-300 hover:text-white"
+                                    >
+                                          <svg
+                                                role="img"
+                                                width="20"
+                                                class="fill-current"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                                <title>TikTok</title>
+                                                <path
+                                                      d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"
+                                                />
+                                          </svg>
+                                    </a>
+
+                                    <!-- LinkedIn -->
+                                    <a
+                                          href=""
+                                          target="_blank"
+                                          class="hover:border-primary hover:bg-primary mr-3 flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-300 hover:text-white"
+                                    >
+                                          <svg
+                                                role="img"
+                                                width="20"
+                                                class="fill-current"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                                <title>LinkedIn</title>
+                                                <path
+                                                      d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                                                />
+                                          </svg>
+                                    </a>
+                              </div>
+                              <p
+                                    class="text-center text-xs font-medium text-slate-500"
+                              >
+                                    Dibuat oleh
+                                    <a
+                                          href="https://instagram.com/sandhikagalih"
+                                          target="_blank"
+                                          class="text-primary font-bold"
+                                          >Abdullah Khadafi</a
+                                    >, menggunakan
+                                    <a
+                                          href="https://tailwindcss.com"
+                                          target="_blank"
+                                          class="font-bold text-sky-500"
+                                          >Tailwind CSS</a
+                                    >.<br />@2023
+                              </p>
+                        </div>
+                  </div>
+            </footer>
+            <!-- Footer End -->
+            <!-- Back to top Start -->
+            <div class="container">
+                  <div
+                        id="to-top"
+                        class="fixed bottom-16 right-5 z-[9999] hidden"
+                  >
+                        <div class="flex">
+                              <a
+                                    href="#home"
+                                    class="bg-primary h-14 w-14 items-center justify-center rounded-full p-4 hover:animate-pulse"
+                              >
+                                    <span
+                                          class="mt-2 block h-5 w-5 rotate-45 border-l-2 border-t-2"
+                                    ></span>
+                              </a>
+                        </div>
+                  </div>
+            </div>
+            <!-- Back to top End -->
+            <div class="container">
+                  <div
+                        class="bg-primary fixed bottom-5 right-5 z-[9999] flex rounded-lg p-2"
+                  >
+                        <input
+                              type="checkbox"
+                              class="hidden"
+                              id="dark-toggle"
+                        />
+                        <label for="dark-toggle">
+                              <div
+                                    class="bg-light dark:bg-dark flex h-5 w-10 cursor-pointer items-center rounded-full p-1"
+                              >
+                                    <div
+                                          class="toggle-circle bg-dark dark:bg-light h-4 w-4 rounded-full transition duration-300 ease-in-out"
+                                    ></div>
+                              </div>
+                        </label>
+                  </div>
+            </div>
+            <script>
+                  // Navbar Fixed
+                  window.onscroll = function () {
+                        const header = document.querySelector('header');
+                        const fixedNav = header.offsetTop;
+                        const toTop = document.querySelector('#to-top');
+
+                        if (window.pageYOffset > fixedNav) {
+                              header.classList.add('navbar-fixed1');
+                              header.classList.add('dark:navbar-fixed2');
+                              toTop.classList.remove('hidden');
+                              toTop.classList.add('flex');
+                        } else {
+                              header.classList.remove('navbar-fixed1');
+                              header.classList.remove('dark:navbar-fixed2');
+                              toTop.classList.remove('flex');
+                              toTop.classList.add('hidden');
+                        }
+                  };
+
+                  // Hamburger
+                  const hamburger = document.querySelector('#hamburger');
+                  const navMenu = document.querySelector('#nav-menu');
+
+                  hamburger.addEventListener('click', function () {
+                        hamburger.classList.toggle('hamburger-active');
+                        navMenu.classList.toggle('hidden');
+                  });
+
+                  // Klik di luar hamburger
+                  window.addEventListener('click', function (e) {
+                        if (e.target != hamburger && e.target != navMenu) {
+                              hamburger.classList.remove('hamburger-active');
+                              navMenu.classList.add('hidden');
+                        }
+                  });
+
+                  // Darkmode toggle
+                  const darkToggle = document.querySelector('#dark-toggle');
+                  const html = document.querySelector('html');
+
+                  darkToggle.addEventListener('click', function () {
+                        if (darkToggle.checked) {
+                              html.classList.add('dark');
+                              localStorage.theme = 'dark';
+                        } else {
+                              html.classList.remove('dark');
+                              localStorage.theme = 'light';
+                        }
+                  });
+
+                  // pindahkan posisi toggle sesuai mode
+                  if (
+                        localStorage.theme === 'dark' ||
+                        (!('theme' in localStorage) &&
+                              window.matchMedia('(prefers-color-scheme: dark)')
+                                    .matches)
+                  ) {
+                        darkToggle.checked = true;
+                  } else {
+                        darkToggle.checked = false;
+                  }
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                  const ctx = document.getElementById('myChart');
+
+                  const data = {
+                        labels: [
+                              'HTML',
+                              'CSS',
+                              'Java Scripts',
+                              'TailwindCSS',
+                              'Bootstraps',
+                        ],
+                        datasets: [
+                              {
+                                    label: 'Skils ',
+                                    data: [8, 7, 5, 9, 7],
+                                    backgroundColor: [
+                                          'rgb(255, 99, 132)',
+                                          'rgb(75, 192, 192)',
+                                          'rgb(255, 205, 86)',
+                                          'rgb(201, 203, 207)',
+                                          'rgb(54, 162, 235)',
+                                    ],
+                              },
+                        ],
+                  };
+
+                  Chart.defaults.backgroundColor = 0;
+                  Chart.defaults.borderColor = '#e2e8f0';
+                  Chart.defaults.color = '#84cc16';
+
+                  new Chart(ctx, {
+                        type: 'polarArea',
+                        data: data,
+                        options: {
+                              responsive: true,
+                              scales: {
+                                    r: {
+                                          pointLabels: {
+                                                display: true,
+                                                centerPointLabels: false,
+                                                font: {
+                                                      size: 0,
+                                                      family: "'Inter, sans-serif",
+                                                },
+                                          },
+                                    },
+                              },
+                              plugins: {
+                                    legend: {
+                                          position: true,
+                                    },
+                                    title: {
+                                          display: true,
+                                          font: {
+                                                size: 15,
+                                                family: 'Inter',
+                                          },
+                                          text: 'Skil Range 0 - 10',
+                                    },
+                              },
+                        },
+                  });
+            </script>
+      </body>
+</html>
